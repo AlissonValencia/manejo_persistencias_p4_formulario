@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Formulario de Contacto</h2>
+        <form id="contactForm">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
+
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" required>
+
+            <input type="submit" value="Enviar">
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+            const nombre = document.getElementById('nombre').value;
+            const correo = document.getElementById('correo').value;
+            // const direccion = document.getElementById('direccion').value; // La dirección no se almacena en este ejemplo, pero se captura.
+
+            // Guardar el nombre en sessionStorage
+            sessionStorage.setItem('userName', nombre);
+            console.log('Nombre guardado en sessionStorage:', sessionStorage.getItem('userName'));
+
+            // Extraer y guardar el dominio del correo en localStorage
+            const atIndex = correo.indexOf('@');
+            if (atIndex > -1) {
+                const dominio = correo.substring(atIndex + 1);
+                localStorage.setItem('emailDomain', dominio);
+                console.log('Dominio del correo guardado en localStorage:', localStorage.getItem('emailDomain'));
+            } else {
+                console.log('El correo electrónico no es válido (no contiene "@").');
+            }
+
+            document.getElementById('message').textContent = '¡Formulario enviado y datos guardados!';
+
+            // Opcional: limpiar el formulario después del envío
+            // document.getElementById('contactForm').reset();
+        });
+    </script>
+</body>
+</html>
